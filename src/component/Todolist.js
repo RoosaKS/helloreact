@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
+import Todotable from './Todotable';
 
 function Todolist(){
 
     const [todo, setTodo] = useState({
         description: '',
-        date: ''
+        date: '',
+        priority: ''
         });
  
         const [todos, setTodos] = useState([]);
@@ -28,29 +30,20 @@ function Todolist(){
                 onChange={e =>setTodo({...todo, description: e.target.value})}
             />
             <input
+                placeholder="Priority"
+                value={todo.priority}
+                onChange={e =>setTodo({...todo, priority: e.target.value})}
+            />
+            <input
                 placeholder="Date"
                 value={todo.date}
                 type= "date"
                 onChange={e =>setTodo({...todo, date: e.target.value})}
             />
+            
             <button onClick={handleAddTodo} >Add Todo</button>
-            <table>
-                <tbody>
-
-                    <tr>
-                        <th>Description</th>
-                        <th>Date</th>
-                    </tr>
-                    {
-                        todos.map((todo, index) => 
-                        <tr key ={index}>
-                            <td>{todo.description}</td>
-                            <td>{todo.date}</td>
-                            <td><button onClick={() =>handleDeleteTodo (index)}>Done</button></td>
-                        </tr>)
-                    }
-                </tbody>
-            </table>
+            
+            <Todotable todos={todos} deleteTodo={handleDeleteTodo}/>
         </div>
     );
 }
